@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="text-center">User Register</h2>
+    <div class="container  col-md-6 border border-2 border-primary rounded text-bg-dark p-4 shadow-sm">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-primary col-12" type="submit" value="register">
+        </form>
+    </div>
+
+
+
+{% endblock %}

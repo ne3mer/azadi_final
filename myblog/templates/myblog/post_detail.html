@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card bg-dark">
+                    {% if post.image %}
+                        <img class="card-img-top" src="{{ post.image.url }}" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content | safe }}</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        نوشته شده در {{ post.created_date }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">پست های مرتبط</h5>
+                        <hr>
+                        {% for related_post in related_posts %}
+                            <div class="border border-2 rounded-2 p-4">
+                                <h6 class="card-subtitle mb-2 text-muted">{{ related_post.title }}</h6>
+                                {% if post.image %}
+                                    <img class="card-img-top" src="{{ related_post.image.url }}" alt="{{ post.title }}">
+                                {% endif %}
+                                <p class="card-text">{{ related_post.content|truncatechars:30 }}</p>
+                                <a href="{% url 'myblog:post_detail' related_post.pk %}" class="btn btn-primary w-100">مشاهده
+                                    پست</a>
+                            </div>
+
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

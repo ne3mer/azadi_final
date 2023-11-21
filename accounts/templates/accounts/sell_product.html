@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1>Sell Product</h1>
+        <p>Are you sure you want to sell "{{ user_product.product.name }}"?</p>
+        <p><strong>Current Price:</strong> {{ user_product.price }}</p>
+        <p><strong>Initial Price:</strong> {{ user_product.initial_price }}</p>
+        <p><strong>Quantity:</strong> {{ user_product.quantity }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-primary" type="submit">Sell Product</button>
+        </form>
+    </div>
+{% endblock %}

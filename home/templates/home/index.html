@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container my-5">
+        <h2 class="text-center text-primary border-bottom pb-4">
+            <div class="row d-flex gap-3">
+                {% for product in products %}
+                    <div class="card bg-light p-2" style="width: 18rem;">
+                        <img class="card-img-top w-100 rounded" src="{{ product.image.url }}" alt="Card image cap"
+                             style="width:286px " height="250px">
+                        <div class="card-body">
+                            <h4 class="card-title text-dark">{{ product.name }}</h4>
+                            <h6 class="card-text text-info">{{ product.description }}</h6>
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">مشاهده جزيیات</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </h2>
+
+        <h1 class="pt-4">وبلاگ</h1>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        {% if post.image %}
+                            <img class="card-img-top" src="{{ post.image.url }}" alt="{{ post.title }}" width="250px" height="250px">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title text-dark pb-4">{{ post.title }}</h5>
+                            <a href="{% url 'myblog:post_detail' post.pk %}" class="btn btn-primary">مشاهده پست</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

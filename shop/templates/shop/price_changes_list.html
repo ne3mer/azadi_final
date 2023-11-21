@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+
+
+{% block content %}
+    <div class="text-danger">
+        <h1>تغییرات قیمت</h1>
+        <canvas id="price-chart"></canvas>
+        <ul>
+            {% for price_change in price_changes %}
+                <li>{{ price_change.product.name }} - {{ price_change.old_price }}
+                    → {{ price_change.new_price }} ----- {{ price_change.created_at|to_jalali:'%Y-%m-%d' }}</li>
+            {% empty %}
+                <li>No price changes yet.</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+
+    <script>
+        var ctx = document.getElementById('price-chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [{% for price_change in price_changes %}"{{ price_change.created_at|date:'M j, Y' }}
+                    ", {% endfor %}],
+                    datasets
+        :
+        [{
+            label: 'Price',
+            data: [{% for price_change in price_changes %}{{ price_change.new_price }}, {% endfor %}],
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            borderColor: 'rgba(0, 0, 255, 1)',
+            borderWidth: 4
+        }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+        })
+        ;
+    </script>
+{% endblock %}
